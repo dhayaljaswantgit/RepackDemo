@@ -14,9 +14,8 @@ import {ScriptManager, Script} from '@callstack/repack/client';
 const resolveURL = Federated.createURLResolver({
   containers: {
     app1: 'http://localhost:9000/[name][ext]',
-    app2: 'http://localhost:9001/[name][ext]',
-    serverHosted:
-      'https://firebasestorage.googleapis.com/v0/b/jaswant-dhayal.appspot.com/o/index.bundle?alt=media&token=2e13d9d9-3428-4545-b07c-ad8356a22698',
+    // app2: 'http://localhost:9001/[name][ext]',
+    app2: `https://github.com/dhayaljaswantgit/test-data/releases/download/app2-${Platform.OS}@1.0.0/[name][ext]`,
     // module1: 'http://localhost:9002/[name][ext]',
   },
 });

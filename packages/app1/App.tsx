@@ -11,7 +11,7 @@ import {SafeAreaView, StyleSheet, Text} from 'react-native';
 function App(): React.JSX.Element {
   return (
     <SafeAreaView style={{}}>
-      <Text style={styles.sectionTitle}>This is App1 </Text>
+      <Text style={styles.sectionTitle}>This is App1 (Local)</Text>
     </SafeAreaView>
   );
 }
