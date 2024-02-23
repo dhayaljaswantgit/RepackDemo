@@ -4,16 +4,17 @@
   "private": true,
   "scripts": {
     "start": "react-native webpack-start --port 9001",
-    "bundle": "react-native webpack-bundle --platform ios --entry-file index.js --bundle-output ./dist/index.bundle --dev=false",
-    "webpack:production:ios": "react-native webpack-bundle --platform ios --entry-file index.js --bundle-output ./dist/index.bundle --dev=false mode=production",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "bundle:ios": "react-native webpack-bundle --platform ios --entry-file index.js",
+    "bundle:android": "react-native webpack-bundle --platform android --entry-file index.js --bundle-output ./dist/android/app2.container.bundle",
+    "bundle": "yarn bundle:ios && yarn bundle:android"
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.4"
+    "react-native": "0.71.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

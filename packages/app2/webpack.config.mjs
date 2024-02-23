@@ -1,6 +1,7 @@
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import * as Repack from '@callstack/repack';
+const STANDALONE = Boolean(process.env.STANDALONE);
 
 /**
  * More documentation, installation, usage, motivation and differences with Metro is available at:
@@ -18,12 +19,12 @@ import * as Repack from '@callstack/repack';
  *            when running with `react-native start/bundle`.
  */
 export default env => {
-  console.log('Webpack env => ', env);
+  console.log('env app2 => ', env);
   const {
     mode = 'development',
     context = Repack.getDirname(import.meta.url),
     entry = './index.js',
-    platform = process.env.PLATFORM || 'ios',
+    platform = process.env.PLATFORM,
     minimize = mode === 'production',
     devServer = undefined,
     bundleFilename = undefined,
@@ -107,7 +108,7 @@ export default env => {
      */
     output: {
       clean: true,
-      path: path.join(dirname, 'build', platform),
+      path: path.join(dirname, 'build/generated', platform),
       filename: 'index.bundle',
       chunkFilename: '[name].chunk.bundle',
       publicPath: Repack.getPublicPath({platform, devServer}),
@@ -252,19 +253,26 @@ export default env => {
         name: 'app2',
         exposes: {
           './App': './App.tsx',
-          // './Text': './src/Text.tsx',
-          // './foo': './src/foo.ts',
         },
         shared: {
           react: {
             ...Repack.Federated.SHARED_REACT,
             requiredVersion: '18.2.0',
+            singleton: false,
+            eager: false,
           },
           'react-native': {
             ...Repack.Federated.SHARED_REACT_NATIVE,
             requiredVersion: '0.73.4',
+            singleton: false,
+            eager: false,
           },
         },
+      }),
+      new Repack.plugins.CodeSigningPlugin({
+        enabled: mode === 'production',
+        privateKeyPath: './code-signing.pem',
+        outputPath: path.join('build', 'outputs', platform, 'remotes'),
       }),
     ],
   };
